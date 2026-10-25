@@ -9,7 +9,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type {
-  CommunityNeedPoint,
   DriveType,
   FoodCategory,
   FoodDrive,
@@ -23,7 +22,7 @@ import type {
 import { CATEGORIES } from '../lib/categories';
 import { addDays, todayISO } from '../lib/dates';
 import { haversineMiles } from '../lib/geo';
-import { NEIGHBORHOODS, neighborhoodCenter } from './region';
+import { neighborhoodCenter } from './region';
 
 /** Mulberry32: tiny deterministic PRNG so the demo data is reproducible. */
 function mulberry32(seed: number) {
@@ -162,7 +161,8 @@ function weeklyHistory(base: number, trend: number, amp: number): number[] {
 
 const T = todayISO();
 
-export const SHELTERS: Shelter[] = [
+// All shelters are generated (keeps the random sequence stable); only three are shown.
+const ALL_SHELTERS: Shelter[] = [
   {
     id: 'sh-hope', name: 'Hope Harbor Family Shelter', kind: 'Shelter', neighborhood: 'Riverside',
     location: jitter(neighborhoodCenter('Riverside'), 0.6), address: '410 Ferry St (fictional)',
@@ -172,7 +172,7 @@ export const SHELTERS: Shelter[] = [
       { category: 'protein', label: 'Protein products', unit: 'units', lbsPerUnit: 1, quantityNeeded: 100, quantityReceived: 10, deadline: addDays(T, 5) },
       { category: 'baby', label: 'Infant formula', unit: 'units', lbsPerUnit: 1.6, quantityNeeded: 30, quantityReceived: 4, deadline: addDays(T, 4) },
     ],
-    reportedSeverity: 4, inventoryDaysOnHand: 5, lastVerified: addDays(T, -2), verifiedBy: 'Shelter director (phone check)',
+    reportedSeverity: 3, inventoryDaysOnHand: 5, lastVerified: addDays(T, -2), verifiedBy: 'Shelter director (phone check)',
     instructions: 'Drop off at the side entrance on Ferry St. Please no glass jars. Label boxes by category.',
     hours: 'Mon–Sat 9am–5pm', contact: { phone: '(555) 010-2200', email: 'donate@hopeharbor.example', public: true },
     storage: { refrigerated: true, frozen: false, dryCapacityLbs: 900 }, turnoverDays: 6, peopleServedWeekly: 140,
@@ -188,7 +188,7 @@ export const SHELTERS: Shelter[] = [
       { category: 'grains', label: 'Pasta & rice', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 500, quantityReceived: 220, deadline: addDays(T, 28) },
       { category: 'produce', label: 'Fresh produce', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 400, quantityReceived: 120, deadline: addDays(T, 7) },
     ],
-    reportedSeverity: 3, inventoryDaysOnHand: 11, lastVerified: addDays(T, -1), verifiedBy: 'Warehouse manager (portal update)',
+    reportedSeverity: 2, inventoryDaysOnHand: 11, lastVerified: addDays(T, -1), verifiedBy: 'Warehouse manager (portal update)',
     instructions: 'Dock 3 receiving, weekdays 8am–3pm. Pallets welcome. Weigh-in on arrival.',
     hours: 'Mon–Fri 8am–3pm', contact: { phone: '(555) 010-4100', email: 'receiving@midvalley.example', public: true },
     storage: { refrigerated: true, frozen: true, dryCapacityLbs: 6000 }, turnoverDays: 10, peopleServedWeekly: 2100,
@@ -306,6 +306,18 @@ export const SHELTERS: Shelter[] = [
     weeklyDistributionLbs: weeklyHistory(210, 0.02, 0.04), weeklyBaselineSupplyLbs: 180, currentInventoryLbs: 140, provenance: 'sample',
   },
 ];
+
+/** The three partner organizations shown in the app: one of each kind. */
+const SHOWN_SHELTERS = ['sh-hope', 'sh-mid', 'sh-st'];
+export const SHELTERS: Shelter[] = ALL_SHELTERS.filter((x) => SHOWN_SHELTERS.includes(x.id));
+
+// Current shelf stock by food type (lbs). Sums to each shelter's currentInventoryLbs.
+const STOCK: Record<string, Partial<Record<FoodCategory, number>>> = {
+  'sh-hope': { grains: 150, protein: 80, canned_veg: 140, canned_fruit: 110, breakfast: 90, baby: 20, hygiene: 50 },
+  'sh-mid': { grains: 2100, protein: 1300, canned_veg: 1800, canned_fruit: 900, breakfast: 1100, baby: 200, hygiene: 300, produce: 500 },
+  'sh-st': { grains: 40, protein: 35, canned_veg: 30, produce: 45, breakfast: 20 },
+};
+for (const sh of SHELTERS) sh.stockByCategory = STOCK[sh.id];
 
 // ── Historical, active and upcoming drives ─────────────────────────────────
 function nearestShelters(loc: LatLng, n: number): string[] {
@@ -455,31 +467,15 @@ function generateActiveAndUpcoming(): FoodDrive[] {
   return out;
 }
 
-export const DRIVES: FoodDrive[] = [...generateCompleted(), ...generateActiveAndUpcoming()];
+/** Current drives shown in the app. Completed drives are the model's training history. */
+const SHOWN_CURRENT = ['dr-a01', 'dr-u01'];
+export const DRIVES: FoodDrive[] = [...generateCompleted(), ...generateActiveAndUpcoming().filter((d) => SHOWN_CURRENT.includes(d.id))];
 
 // Some completed drives get a short organizer note on impact.
 export const IMPACT_NOTES: Record<string, string> = {};
 DRIVES.filter((d) => d.status === 'completed').forEach((d, i) => {
   if (i % 3 === 0) IMPACT_NOTES[d.id] = 'Shelter partners reported the delivery covered their weekend distribution.';
 });
-
-/** Fixed drop-off bins that are not tied to one event (e.g. library lobbies). */
-export const DROP_OFF_POINTS = NEIGHBORHOODS.slice(0, 6).map((n, i) => ({
-  id: `bin-${i}`,
-  name: `${n.name} Library donation bin`,
-  location: jitter(neighborhoodCenter(n.name), 0.5),
-  hours: 'Library hours',
-}));
-
-/** Documented community need. Synthetic here; in production use public datasets (see docs). */
-export const NEED_POINTS: CommunityNeedPoint[] = [
-  ...NEIGHBORHOODS.map((n) => {
-    const high: Record<string, number> = { 'Cedar Flats': 0.9, Southpoint: 0.85, 'Harbor Hill': 0.75, Eastbrook: 0.7, 'Willow Creek': 0.6 };
-    return { location: neighborhoodCenter(n.name), needIndex: high[n.name] ?? between(0.2, 0.4), label: n.name };
-  }),
-  { location: neighborhoodCenter('Southpoint'), needIndex: 0.8, label: 'Southpoint south' },
-];
-NEED_POINTS[NEED_POINTS.length - 1].location = { lat: NEED_POINTS[NEED_POINTS.length - 1].location.lat - 0.025, lng: NEED_POINTS[NEED_POINTS.length - 1].location.lng + 0.02 };
 
 export const DEMO_USER: UserProfile = {
   id: 'u-1',
@@ -488,7 +484,7 @@ export const DEMO_USER: UserProfile = {
   school: 'Maple Heights High School',
   home: neighborhoodCenter('Maple Heights'),
   joined: addDays(T, -420),
-  signedUpShiftIds: ['dr-u01-s2'],
+  signedUpShiftIds: [],
   organizedDriveIds: ['dr-a01'],
   hoursLogged: 31,
   lbsDonated: 64,

@@ -9,7 +9,6 @@ type Action =
   | { type: 'createDrive'; drive: FoodDrive }
   | { type: 'logDonation'; driveId: string; category: FoodCategory; lbs: number }
   | { type: 'completeDrive'; driveId: string; actualParticipants: number }
-  | { type: 'toggleShift'; shiftId: string; driveId: string }
   | { type: 'updateShelterNeed'; shelterId: string; delivered: Partial<Record<FoodCategory, number>> }
   | { type: 'verifyShelter'; shelterId: string }
   | { type: 'reset' };
@@ -45,19 +44,6 @@ function reducer(s: Snapshot, a: Action): Snapshot {
         ...s,
         drives: s.drives.map((d) => (d.id === a.driveId ? { ...d, status: 'completed', actualParticipants: a.actualParticipants } : d)),
       };
-    case 'toggleShift': {
-      const on = s.user.signedUpShiftIds.includes(a.shiftId);
-      return {
-        ...s,
-        user: {
-          ...s.user,
-          signedUpShiftIds: on ? s.user.signedUpShiftIds.filter((x) => x !== a.shiftId) : [...s.user.signedUpShiftIds, a.shiftId],
-        },
-        drives: s.drives.map((d) =>
-          d.id !== a.driveId ? d : { ...d, shifts: d.shifts.map((sh) => (sh.id === a.shiftId ? { ...sh, filled: sh.filled + (on ? -1 : 1) } : sh)) },
-        ),
-      };
-    }
     case 'updateShelterNeed':
       return {
         ...s,
@@ -66,6 +52,11 @@ function reducer(s: Snapshot, a: Action): Snapshot {
             ? sh
             : {
                 ...sh,
+                // Delivered food lands on the shelves, so the inventory charts update too.
+                currentInventoryLbs: sh.currentInventoryLbs + Object.values(a.delivered).reduce((t, v) => t + (v ?? 0), 0),
+                stockByCategory: Object.fromEntries(
+                  Object.entries({ ...a.delivered, ...sh.stockByCategory }).map(([c]) => [c, (sh.stockByCategory?.[c as FoodCategory] ?? 0) + (a.delivered[c as FoodCategory] ?? 0)]),
+                ),
                 needs: sh.needs.map((n) => {
                   const lbs = a.delivered[n.category];
                   if (!lbs) return n;

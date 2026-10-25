@@ -4,17 +4,15 @@ All algorithms are hand-written TypeScript in `src/lib/`, with **no ML libraries
 
 | Module | Algorithm | Used on |
 |---|---|---|
-| `forecast.ts` | Regularized log-linear regression (Bayesian MAP), prediction intervals, rolling-origin backtest | Predict, Create, Dashboard, Drive, Landing |
-| `resources.ts` | Logistics conversion with published planning assumptions; shrunken category shares | Predict, Create |
-| `urgency.ts` | Transparent weighted score with staleness discount | Shelters, Match, Dashboard |
-| `needForecast.ts` | Holt's linear exponential smoothing + inventory projection | Shelters, Dashboard |
-| `matching.ts` | Constrained chunked greedy allocation with diminishing returns + organizer locks | Match |
-| `routing.ts` | Capacity sweep + nearest neighbor + 2-opt | Match |
-| `coverage.ts` | Gaussian kernel density, need − coverage | Map |
-| `volunteers.ts` | Weighted preference scoring | Volunteer |
-| `waste.ts` | Expiry-feasibility filter + ranking | Match, Dashboard |
+| `forecast.ts` | Regularized log-linear regression (Bayesian MAP), prediction intervals, rolling-origin backtest | Plan, Home, Drive pages |
+| `resources.ts` | Logistics conversion with published planning assumptions; shrunken category shares | Plan |
+| `urgency.ts` | Transparent weighted score with staleness discount | Shelters (incl. calculator), Match |
+| `needForecast.ts` | Holt's linear exponential smoothing + inventory projection | Shelters (supply-vs-demand chart) |
+| `matching.ts` | Constrained chunked greedy allocation with diminishing returns + organizer locks | Match, Home (success metric) |
 | `geo.ts` | Haversine distance + road circuity factor | everywhere |
 | `linalg.ts` | Gauss–Jordan matrix inversion | forecast |
+
+> Sections 6–9 below (routing, coverage gaps, volunteer matching, waste prevention) describe modules removed in the simplified version. They remain in git history (commit `3a7e7ed`) if the team wants them back.
 
 ---
 

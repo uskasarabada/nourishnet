@@ -113,14 +113,9 @@ export interface Shelter {
   /** Pounds expected to arrive per week from regular suppliers. */
   weeklyBaselineSupplyLbs: number;
   currentInventoryLbs: number;
+  /** Current shelf stock by food type, in lbs. */
+  stockByCategory?: Partial<Record<FoodCategory, number>>;
   provenance: Provenance;
-}
-
-export interface CommunityNeedPoint {
-  location: LatLng;
-  /** 0–1 index of documented need (e.g. food-insecurity rate × population). */
-  needIndex: number;
-  label: string;
 }
 
 export interface UserProfile {

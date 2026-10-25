@@ -52,9 +52,9 @@ export function urgency(s: Shelter): UrgencyResult {
 
   const W = URGENCY_WEIGHTS;
   const factors: UrgencyResult['factors'] = [
-    { key: 'severity', label: 'Reported shortage', value: sev, contribution: 100 * W.severity * sev, explanation: `Severity ${s.reportedSeverity} of 5, reported by staff` },
-    { key: 'deadline', label: 'Deadline', value: dl, contribution: 100 * W.deadline * dl, explanation: nearestDeadlineDays <= 0 ? 'A request is due today' : `Nearest request due in ${nearestDeadlineDays} days` },
-    { key: 'unmet', label: 'Still needed', value: um, contribution: 100 * W.unmet * um, explanation: `${Math.round(um * 100)}% of requested pounds not yet received` },
+    { key: 'severity', label: 'Reported shortage', value: sev, contribution: 100 * W.severity * sev, explanation: `Staff rate the shortage ${s.reportedSeverity} out of 5` },
+    { key: 'deadline', label: 'Deadline', value: dl, contribution: 100 * W.deadline * dl, explanation: nearestDeadlineDays <= 0 ? 'They need it today' : nearestDeadlineDays >= 99 ? 'No open request deadline' : `They need it within ${nearestDeadlineDays} days` },
+    { key: 'unmet', label: 'Still needed', value: um, contribution: 100 * W.unmet * um, explanation: `${Math.round(um * 100)}% of what they asked for hasn't arrived yet` },
     { key: 'inventory', label: 'Food on hand', value: inv, contribution: 100 * W.inventory * inv, explanation: `About ${s.inventoryDaysOnHand} days of food left` },
   ];
   const daysSinceVerified = -daysFromToday(s.lastVerified);

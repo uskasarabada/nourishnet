@@ -17,7 +17,7 @@ export interface Repository {
   reset(): Snapshot;
 }
 
-const KEY = 'nourishnet.demo.v2';
+const KEY = 'nourishnet.demo.v3';
 
 /** Seed data + the user's own changes, kept in this browser only. */
 export const localRepository: Repository = {

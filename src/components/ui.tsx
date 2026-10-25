@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { AlertTriangle, BadgeCheck, Beaker, Calculator, Info, ShieldAlert } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { AlertTriangle, BadgeCheck, Beaker, Calculator, ChevronDown, Info, ShieldAlert } from 'lucide-react';
 import type { Provenance } from '../lib/types';
 import type { UrgencyLevel } from '../lib/urgency';
 
@@ -7,16 +7,37 @@ export function cx(...xs: (string | false | null | undefined)[]) {
   return xs.filter(Boolean).join(' ');
 }
 
+/** Keeps pages simple: the extra charts and explanations stay hidden until someone asks for them. */
+export function Details({ label = 'Show details', hideLabel = 'Hide details', children, defaultOpen = false, className }: { label?: string; hideLabel?: string; children: ReactNode; defaultOpen?: boolean; className?: string }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className={className}>
+      <button type="button" className="btn-secondary" aria-expanded={open} onClick={() => setOpen(!open)}>
+        {open ? hideLabel : label}
+        <ChevronDown size={16} className={cx('transition-transform', open && 'rotate-180')} />
+      </button>
+      {open && <div className="mt-6 space-y-6 animate-rise">{children}</div>}
+    </div>
+  );
+}
+
 export const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 export const fmtK = (n: number) => (n >= 10000 ? `${(n / 1000).toFixed(n >= 100000 ? 0 : 1)}k` : fmt(n));
 
-export function PageHeader({ eyebrow, title, subtitle, actions }: { eyebrow?: string; title: string; subtitle?: ReactNode; actions?: ReactNode }) {
+export function PageHeader({ eyebrow, title, subtitle, actions, accent, icon }: { eyebrow?: string; title: string; subtitle?: ReactNode; actions?: ReactNode; accent?: string; icon?: ReactNode }) {
   return (
     <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between animate-rise">
-      <div className="max-w-2xl">
-        {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
-        <h1 className="text-3xl font-semibold text-forest-900 sm:text-4xl">{title}</h1>
-        {subtitle && <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{subtitle}</p>}
+      <div className="flex max-w-3xl items-start gap-4">
+        {icon && accent && (
+          <div className="mt-1 hidden h-12 w-12 shrink-0 place-items-center rounded-2xl text-white shadow-card sm:grid" style={{ background: accent }} aria-hidden>
+            {icon}
+          </div>
+        )}
+        <div>
+          {eyebrow && <div className="eyebrow mb-2" style={accent ? { color: accent } : undefined}>{eyebrow}</div>}
+          <h1 className="text-3xl font-semibold text-forest-900 sm:text-4xl">{title}</h1>
+          {subtitle && <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{subtitle}</p>}
+        </div>
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>

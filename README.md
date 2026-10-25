@@ -21,20 +21,14 @@ Requires Node 18+.
 
 | Route | Screen |
 |---|---|
-| `/` | Landing page with a live forecast preview |
-| `/dashboard` | Main dashboard |
-| `/map` | Food Drive Map (filters, coverage-gap layer) |
-| `/predict` | Prediction Center + what-if simulator + model transparency |
-| `/shelters` | Shelter Needs + urgency breakdown + 6-week shortage forecast |
-| `/create` | Create a Food Drive (multi-step) |
-| `/drives/:id` | Food Drive Details (log donations, sign up, close out) |
-| `/match` | Smart Matching + delivery routes + waste alerts |
-| `/impact` | Impact Analytics + fair school challenge |
-| `/profile` | User Profile |
-| `/volunteer` | Volunteer Matching |
-| `/drives/:id/report` | Printable impact report |
+| `/` | **Home**: live forecast preview, what each feature does, success metrics, outside data sources |
+| `/plan` | **Plan**: forecast + what-if simulator + resource plan + "Create this drive" + *How the AI works* |
+| `/drives` | **Drives**: map and list of local drives |
+| `/drives/:id` | Drive page: progress vs. forecast, inventory, log donations, close out (retrains the model) |
+| `/shelters` | **Shelters**: three partner shelters, inventory gauges, supply-vs-demand charts, and the in-depth urgency score explainer with an interactive calculator |
+| `/match` | **Match**: splits a drive's food across shelters, with reasons and adjustable amounts |
 
-The **Emergency** button in the nav filters the app to verified urgent requests. **Reset demo** in the top banner restores the original data.
+Each feature has its own accent color (Plan green, Drives blue, Shelters coral, Match violet). **Reset demo** in the top banner restores the original data.
 
 ## How the predictions work (short version)
 

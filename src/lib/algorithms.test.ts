@@ -3,7 +3,6 @@ import { DRIVES, SHELTERS } from '../data/seed';
 import { fitModel, forecast, rollingBacktest, rowsFromDrives } from './forecast';
 import { invert } from './linalg';
 import { matchDonations, supplyFromTotals } from './matching';
-import { planRoutes } from './routing';
 import { urgency } from './urgency';
 import { forecastShelterNeed, holt } from './needForecast';
 import { haversineMiles } from './geo';
@@ -58,14 +57,14 @@ describe('collection forecast', () => {
 });
 
 describe('urgency', () => {
-  it('stays in 0–100 and ranks a critical kitchen above a well-stocked pantry', () => {
+  it('stays in 0–100 and ranks the critical kitchen above the well-stocked food bank', () => {
     for (const s of SHELTERS) {
       const u = urgency(s);
       expect(u.score).toBeGreaterThanOrEqual(0);
       expect(u.score).toBeLessThanOrEqual(100);
     }
     const kitchen = urgency(SHELTERS.find((s) => s.id === 'sh-st')!);
-    const pantry = urgency(SHELTERS.find((s) => s.id === 'sh-north')!);
+    const pantry = urgency(SHELTERS.find((s) => s.id === 'sh-mid')!);
     expect(kitchen.score).toBeGreaterThan(pantry.score);
   });
 });
@@ -97,16 +96,6 @@ describe('matching', () => {
     const r = matchDonations(origin, supply, SHELTERS, { maxMiles: 25, locks: { 'sh-mid': 150 }, excluded: ['sh-hope'] });
     expect(r.allocations.find((a) => a.shelterId === 'sh-mid')!.totalLbs).toBe(150);
     expect(r.allocations.find((a) => a.shelterId === 'sh-hope')).toBeUndefined();
-  });
-});
-
-describe('routing', () => {
-  it('2-opt route is never longer than separate round trips', () => {
-    const depot = DRIVES[0].location;
-    const stops = SHELTERS.slice(0, 5).map((s) => ({ id: s.id, name: s.name, location: s.location, lbs: 200 }));
-    const plan = planRoutes(depot, stops, 1500);
-    expect(plan.totalMiles).toBeLessThanOrEqual(plan.naiveMiles + 1e-6);
-    expect(plan.trips.reduce((a, t) => a + t.loadLbs, 0)).toBe(1000);
   });
 });
 

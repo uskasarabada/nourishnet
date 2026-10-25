@@ -12,6 +12,8 @@
 }
 
 @layer components {
+  /* Page container: fills wide monitors, keeps comfortable side margins. */
+  .container-wide { @apply mx-auto w-full max-w-[1760px] px-4 sm:px-6 lg:px-10 2xl:px-14; }
   .card { @apply bg-white rounded-xl2 border border-cream-300/70 shadow-card; }
   .card-pad { @apply p-5 sm:p-6; }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed; }

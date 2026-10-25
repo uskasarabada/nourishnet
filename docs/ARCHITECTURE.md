@@ -4,7 +4,7 @@
 
 ```
 ┌────────────────────────── Browser (React 18 + TypeScript + Vite) ──────────────────────────┐
-│  pages/            10 screens + volunteer + report (React Router)                           │
+│  pages/            Home, Plan, Drives (+ drive page), Shelters, Match (React Router)        │
 │  components/       design system, Leaflet map wrapper, forecast visuals                     │
 │  state/store.tsx   React context + reducer; derives model/backtest with useMemo             │
 │  state/repository  ← the ONLY data boundary (load/save/reset)                               │
@@ -25,9 +25,8 @@ src/
   lib/          types, algorithms, tests
   data/         region config + synthetic seed
   state/        repository + store
-  components/   ui kit, Layout, MapBase, forecastViews, Logo
-  pages/        Landing, Dashboard, MapPage, Predict, Shelters, CreateDrive,
-                DriveDetails, Match, Impact, Profile, Volunteer, Report
+  components/   ui kit, Layout, MapBase, forecastViews, features (per-feature colors), Logo
+  pages/        Landing (Home), Plan, Drives, DriveDetails, Shelters, Match
 docs/           strategy, algorithms, design system, architecture
 ```
 
@@ -86,5 +85,5 @@ GET  /model/backtest → { mape, baselineMape, coverage80, bias, points[] }
 `npm run build` produces static files in `dist/`. Host on Vercel, Netlify, or GitHub Pages with an SPA fallback (all routes → `index.html`).
 
 ## Testing
-- `npm test`: Vitest unit tests for linear algebra, haversine, forecast monotonicity/intervals/backtest-beats-baseline, goal probability, urgency bounds, matching constraints (supply, need caps, refrigeration, locks, exclusions), routing, and Holt smoothing.
+- `npm test`: Vitest unit tests for linear algebra, haversine, forecast monotonicity/intervals/backtest-beats-baseline, goal probability, urgency bounds, matching constraints (supply, need caps, refrigeration, locks, exclusions), and Holt smoothing.
 - `npx tsc --noEmit -p .`: strict type-check.
