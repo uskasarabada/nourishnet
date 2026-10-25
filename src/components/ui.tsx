@@ -71,6 +71,7 @@ const PROV: Record<Provenance, { label: string; cls: string; icon: ReactNode; ti
 };
 
 export function ProvenanceBadge({ kind, className }: { kind: Provenance; className?: string }) {
+  if (kind === 'sample') return null;
   const p = PROV[kind];
   return (
     <span title={p.title} className={cx('inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold', p.cls, className)}>

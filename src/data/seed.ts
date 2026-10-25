@@ -165,7 +165,7 @@ const T = todayISO();
 const ALL_SHELTERS: Shelter[] = [
   {
     id: 'sh-hope', name: 'Hope Harbor Family Shelter', kind: 'Shelter', neighborhood: 'Riverside',
-    location: jitter(neighborhoodCenter('Riverside'), 0.6), address: '410 Ferry St (fictional)',
+    location: jitter(neighborhoodCenter('Riverside'), 0.6), address: 'Riverside neighborhood',
     needs: [
       { category: 'grains', label: 'Rice', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 200, quantityReceived: 35, deadline: addDays(T, 6) },
       { category: 'canned_veg', label: 'Canned vegetables', unit: 'cans', lbsPerUnit: 0.9, quantityNeeded: 150, quantityReceived: 20, deadline: addDays(T, 9) },
@@ -180,7 +180,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-mid', name: 'Mid-Valley Regional Food Bank', kind: 'Food Bank', neighborhood: 'Old Mill',
-    location: jitter(neighborhoodCenter('Old Mill'), 0.4), address: '2200 Industrial Pkwy (fictional)',
+    location: jitter(neighborhoodCenter('Old Mill'), 0.4), address: 'Old Mill neighborhood',
     needs: [
       { category: 'protein', label: 'Peanut butter & canned meat', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 600, quantityReceived: 180, deadline: addDays(T, 21) },
       { category: 'breakfast', label: 'Cereal & oatmeal', unit: 'boxes', lbsPerUnit: 1.1, quantityNeeded: 300, quantityReceived: 60, deadline: addDays(T, 18) },
@@ -196,7 +196,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-st', name: "St. Brigid's Community Kitchen", kind: 'Community Kitchen', neighborhood: 'Eastbrook',
-    location: jitter(neighborhoodCenter('Eastbrook'), 0.5), address: '88 Linden Row (fictional)',
+    location: jitter(neighborhoodCenter('Eastbrook'), 0.5), address: 'Eastbrook neighborhood',
     needs: [
       { category: 'produce', label: 'Potatoes, onions, carrots', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 180, quantityReceived: 30, deadline: addDays(T, 3) },
       { category: 'grains', label: 'Rice & pasta', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 150, quantityReceived: 40, deadline: addDays(T, 8) },
@@ -210,7 +210,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-north', name: 'Northgate Neighborhood Pantry', kind: 'Pantry', neighborhood: 'Northgate',
-    location: jitter(neighborhoodCenter('Northgate'), 0.5), address: '15 Elm Ct (fictional)',
+    location: jitter(neighborhoodCenter('Northgate'), 0.5), address: 'Northgate neighborhood',
     needs: [
       { category: 'breakfast', label: 'Cereal', unit: 'boxes', lbsPerUnit: 1.1, quantityNeeded: 90, quantityReceived: 50, deadline: addDays(T, 14) },
       { category: 'hygiene', label: 'Hygiene kits', unit: 'packs', lbsPerUnit: 1.5, quantityNeeded: 60, quantityReceived: 25, deadline: addDays(T, 20) },
@@ -223,7 +223,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-cedar', name: 'Cedar Flats Youth & Family Center', kind: 'Pantry', neighborhood: 'Cedar Flats',
-    location: jitter(neighborhoodCenter('Cedar Flats'), 0.5), address: '930 Orchard Ave (fictional)',
+    location: jitter(neighborhoodCenter('Cedar Flats'), 0.5), address: 'Cedar Flats neighborhood',
     needs: [
       { category: 'breakfast', label: 'Kid-friendly breakfast', unit: 'boxes', lbsPerUnit: 1, quantityNeeded: 160, quantityReceived: 22, deadline: addDays(T, 7) },
       { category: 'canned_fruit', label: 'Fruit cups & applesauce', unit: 'packs', lbsPerUnit: 1.2, quantityNeeded: 120, quantityReceived: 18, deadline: addDays(T, 10) },
@@ -238,7 +238,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-south', name: 'Southpoint Veterans Outreach', kind: 'Shelter', neighborhood: 'Southpoint',
-    location: jitter(neighborhoodCenter('Southpoint'), 0.5), address: '5 Garrison Way (fictional)',
+    location: jitter(neighborhoodCenter('Southpoint'), 0.5), address: 'Southpoint neighborhood',
     needs: [
       { category: 'protein', label: 'Canned chili & stew', unit: 'cans', lbsPerUnit: 1, quantityNeeded: 120, quantityReceived: 40, deadline: addDays(T, 12) },
       { category: 'hygiene', label: 'Toiletries', unit: 'packs', lbsPerUnit: 1, quantityNeeded: 70, quantityReceived: 15, deadline: addDays(T, 16) },
@@ -252,7 +252,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-willow', name: 'Willow Creek Mobile Pantry Hub', kind: 'Pantry', neighborhood: 'Willow Creek',
-    location: jitter(neighborhoodCenter('Willow Creek'), 0.5), address: '77 Brookside Plaza (fictional)',
+    location: jitter(neighborhoodCenter('Willow Creek'), 0.5), address: 'Willow Creek neighborhood',
     needs: [
       { category: 'grains', label: 'Rice (bulk)', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 300, quantityReceived: 140, deadline: addDays(T, 15) },
       { category: 'produce', label: 'Shelf-stable produce (apples, squash)', unit: 'lbs', lbsPerUnit: 1, quantityNeeded: 200, quantityReceived: 60, deadline: addDays(T, 6) },
@@ -266,7 +266,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-harbor', name: 'Harbor Hill Senior Meals', kind: 'Community Kitchen', neighborhood: 'Harbor Hill',
-    location: jitter(neighborhoodCenter('Harbor Hill'), 0.5), address: '301 Bayview Dr (fictional)',
+    location: jitter(neighborhoodCenter('Harbor Hill'), 0.5), address: 'Harbor Hill neighborhood',
     needs: [
       { category: 'canned_fruit', label: 'Low-sugar canned fruit', unit: 'cans', lbsPerUnit: 1, quantityNeeded: 90, quantityReceived: 10, deadline: addDays(T, 9) },
       { category: 'canned_veg', label: 'Low-sodium vegetables', unit: 'cans', lbsPerUnit: 0.9, quantityNeeded: 120, quantityReceived: 25, deadline: addDays(T, 9) },
@@ -280,7 +280,7 @@ const ALL_SHELTERS: Shelter[] = [
   },
   {
     id: 'sh-west', name: 'Westfield Campus Food Closet', kind: 'Pantry', neighborhood: 'Westfield',
-    location: jitter(neighborhoodCenter('Westfield'), 0.4), address: 'Student Union, Room 12 (fictional)',
+    location: jitter(neighborhoodCenter('Westfield'), 0.4), address: 'Westfield neighborhood',
     needs: [
       { category: 'grains', label: 'Instant meals & ramen', unit: 'packs', lbsPerUnit: 0.5, quantityNeeded: 200, quantityReceived: 70, deadline: addDays(T, 13) },
       { category: 'protein', label: 'Canned tuna', unit: 'cans', lbsPerUnit: 0.4, quantityNeeded: 150, quantityReceived: 40, deadline: addDays(T, 13) },
@@ -403,7 +403,7 @@ function generateActiveAndUpcoming(): FoodDrive[] {
     return {
       id, name, organization: org.name, orgType: org.type, driveType: type,
       status: startOffset > 0 ? 'upcoming' : 'active',
-      location: loc, address: `${org.hood} (fictional address)`, neighborhood: org.hood,
+      location: loc, address: `${org.hood} neighborhood`, neighborhood: org.hood,
       startDate: start, durationDays, expectedParticipants: participants, acceptedCategories: cats, goalLbs: goal,
       shifts: makeShifts(id, start, durationDays, Math.sqrt(participants / 250)),
       description, provenance: 'sample',

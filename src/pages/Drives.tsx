@@ -3,7 +3,7 @@ import { Marker, Popup } from 'react-leaflet';
 import { Calendar, MapPin } from 'lucide-react';
 import { useStore } from '../state/store';
 import { MapBase, SHELTER_COLOR, STATUS_COLOR, pinIcon } from '../components/MapBase';
-import { PageHeader, Progress, ProvenanceBadge, fmt } from '../components/ui';
+import { PageHeader, Progress, fmt } from '../components/ui';
 import { FEATURE_BY_ID } from '../components/features';
 import type { DriveStatus, FoodDrive } from '../lib/types';
 import { addDays, formatDate, relativeDays } from '../lib/dates';
@@ -65,7 +65,7 @@ export function Drives() {
         <div className="space-y-3">
           {shown.map((d) => <DriveCard key={d.id} d={d} />)}
           <p className="px-1 text-xs text-ink-500">
-            +{history} older drives the model learns from. <ProvenanceBadge kind="sample" />
+            +{history} older drives the model learns from.
           </p>
         </div>
       </div>

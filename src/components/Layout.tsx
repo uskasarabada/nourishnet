@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Beaker, Menu, RotateCcw, X } from 'lucide-react';
+import { Menu, RotateCcw, X } from 'lucide-react';
 import { useStore } from '../state/store';
 import { cx } from './ui';
 import { Logo } from './Logo';
@@ -44,20 +44,6 @@ export function Layout() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[2000] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow-lift">
         Skip to content
       </a>
-      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-forest-900 px-4 py-1.5 text-center text-xs text-forest-100">
-        <span className="inline-flex items-center gap-1.5">
-          <Beaker size={13} aria-hidden /> Demonstration mode: every organization and number shown is <strong className="text-white">fictional sample data</strong>.
-        </span>
-        <button
-          className="inline-flex items-center gap-1 underline decoration-forest-400 underline-offset-2 hover:text-white"
-          onClick={() => {
-            if (confirm('Reset the demo? Drives you created and donations you logged will be removed.')) dispatch({ type: 'reset' });
-          }}
-        >
-          <RotateCcw size={12} aria-hidden /> Reset demo
-        </button>
-      </div>
-
       <header className={cx('sticky top-0 z-[1000] border-b backdrop-blur-md', landing ? 'border-transparent bg-cream-100/80' : 'border-cream-300/70 bg-cream-100/90')}>
         <div className="container-wide flex h-16 items-center gap-4">
           <Link to="/" className="flex items-center gap-2.5" aria-label="NourishNet home">
@@ -105,7 +91,15 @@ export function Layout() {
           </div>
           <div>
             <div className="font-semibold text-ink-700">About this prototype</div>
-            <p className="mt-2">Built for the Congressional App Challenge. Map data © OpenStreetMap contributors. All demo organizations are fictional.</p>
+            <p className="mt-2">Built for the Congressional App Challenge. Map data © OpenStreetMap contributors. Demo organizations and numbers are fictional.</p>
+            <button
+              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-forest-700 underline underline-offset-2"
+              onClick={() => {
+                if (confirm('Reset the demo? Drives you created and donations you logged will be removed.')) dispatch({ type: 'reset' });
+              }}
+            >
+              <RotateCcw size={12} aria-hidden /> Reset demo
+            </button>
           </div>
         </div>
       </footer>

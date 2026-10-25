@@ -6,7 +6,7 @@ import { forecast } from '../lib/forecast';
 import { LBS_PER_MEAL } from '../lib/categories';
 import { needLbs } from '../lib/urgency';
 import { matchDonations, supplyFromLots, supplyFromTotals } from '../lib/matching';
-import { ProvenanceBadge, Slider, fmt } from '../components/ui';
+import { Slider, fmt } from '../components/ui';
 import { FEATURES } from '../components/features';
 
 const SOURCES = [
@@ -114,7 +114,6 @@ export function Landing() {
               </div>
             ))}
           </div>
-          <div className="mt-5"><ProvenanceBadge kind="sample" /> <span className="text-xs text-forest-200">Calculated from the demo's fictional data.</span></div>
         </div>
       </section>
 

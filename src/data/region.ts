@@ -7,7 +7,7 @@ import type { LatLng } from '../lib/types';
 // the demo around your community.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const REGION_NAME = 'Riverbend County (fictional demo region)';
+export const REGION_NAME = 'Tri-Valley';
 // Dublin, California (Tri-Valley, Alameda County)
 export const REGION_CENTER: LatLng = { lat: 37.7022, lng: -121.9358 };
 
