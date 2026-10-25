@@ -116,7 +116,7 @@ export function Plan() {
 
   return (
     <div>
-      <PageHeader eyebrow="Plan a drive" accent={F.color} icon={F.icon} title="How much food will your drive collect?" subtitle="Answer a few questions and we'll tell you what to expect." />
+      <PageHeader eyebrow="Plan a drive" accent={F.color} light={F.light} icon={F.icon} title="How much food will your drive collect?" subtitle="Answer a few questions and we'll tell you what to expect." />
 
       <div className="grid gap-6 lg:grid-cols-[380px_1fr] 2xl:grid-cols-[420px_1fr]">
         {/* Questions */}

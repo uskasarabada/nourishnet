@@ -68,7 +68,7 @@ export function Match() {
 
   return (
     <div>
-      <PageHeader eyebrow="Match donations" accent={F.color} icon={F.icon} title="Where should the food go?" subtitle="We split your drive's food between shelters based on what they asked for and who needs it most." />
+      <PageHeader eyebrow="Match donations" accent={F.color} light={F.light} icon={F.icon} title="Where should the food go?" subtitle="We split your drive's food between shelters based on what they asked for and who needs it most." />
 
       <div className="mx-auto max-w-4xl space-y-6">
         <Card className="card-pad">

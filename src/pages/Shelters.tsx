@@ -29,6 +29,7 @@ export function Shelters() {
       <PageHeader
         eyebrow="Shelter needs"
         accent={F.color}
+        light={F.light}
         icon={F.icon}
         title="Who needs food, and why"
         subtitle="Our three partner shelters and what they need most. Click one to see more."

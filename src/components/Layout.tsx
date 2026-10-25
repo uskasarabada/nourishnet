@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Menu, RotateCcw, X } from 'lucide-react';
 import { useStore } from '../state/store';
 import { cx } from './ui';
-import { Logo } from './Logo';
+import { LogoMark } from './Logo';
 import { FEATURES } from './features';
 
 export function Layout() {
@@ -20,80 +20,76 @@ export function Layout() {
   }, [loc.pathname, loc.hash]);
   const landing = loc.pathname === '/';
 
-  const navLink = (mobile: boolean) =>
-    FEATURES.map((f) => (
-      <NavLink
-        key={f.to}
-        to={f.to}
-        className={({ isActive }) =>
-          cx(mobile ? 'flex items-center gap-2 rounded-xl px-3 py-2.5 font-semibold' : 'flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors', !isActive && 'text-ink-700 hover:bg-cream-200')
-        }
-        style={({ isActive }) => (isActive ? { background: f.color, color: '#fff' } : undefined)}
-      >
-        {({ isActive }) => (
-          <>
-            <span className="h-2 w-2 rounded-full" style={{ background: isActive ? '#fff' : f.color }} aria-hidden />
-            {f.label}
-          </>
-        )}
-      </NavLink>
-    ));
-
   return (
-    <div className="min-h-screen">
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[2000] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow-lift">
+    <div className="min-h-screen overflow-x-clip">
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[2000] focus:bg-white focus:px-4 focus:py-2 focus:shadow-lift">
         Skip to content
       </a>
-      <header className={cx('sticky top-0 z-[1000] border-b backdrop-blur-md', landing ? 'border-transparent bg-cream-100/80' : 'border-cream-300/70 bg-cream-100/90')}>
-        <div className="container-wide flex h-16 items-center gap-4">
-          <Link to="/" className="flex items-center gap-2.5" aria-label="NourishNet home">
-            <Logo />
-            <span className="font-display text-xl font-semibold text-forest-900">NourishNet</span>
+
+      <header className="sticky top-0 z-[1000] bg-steel-200">
+        <div className="container-wide flex h-20 items-center gap-6">
+          <Link to="/" className="flex shrink-0 items-center gap-2.5 text-night-900" aria-label="NourishNet home">
+            <LogoMark />
+            <span className="font-display text-[1.75rem] font-medium leading-none tracking-[-0.03em]">NourishNet</span>
           </Link>
-          <nav className="ml-6 hidden items-center gap-1 md:flex" aria-label="Main">
-            {navLink(false)}
+          <nav className="hidden flex-1 items-center justify-center gap-10 md:flex lg:gap-14" aria-label="Main">
+            {FEATURES.map((f) => (
+              <NavLink
+                key={f.to}
+                to={f.to}
+                className={({ isActive }) => cx('relative py-2 text-[17px] font-medium text-night-900 transition-opacity hover:opacity-70', isActive && 'after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[var(--accent)]')}
+                style={{ ['--accent' as string]: f.color }}
+              >
+                {f.label}
+              </NavLink>
+            ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
-            <Link to="/plan#create" className="btn-primary hidden sm:inline-flex">Plan a drive</Link>
+          <div className="ml-auto flex items-center gap-2 md:ml-0">
+            <Link to="/plan#create" className="btn-primary hidden px-7 py-3.5 text-[17px] font-medium sm:inline-flex">Plan a drive</Link>
             <button className="btn-ghost px-2 md:hidden" onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Menu">
-              {open ? <X size={20} /> : <Menu size={20} />}
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
         {open && (
-          <nav className="border-t border-cream-300 bg-cream-50 px-4 pb-4 pt-2 md:hidden" aria-label="Mobile">
-            {navLink(true)}
+          <nav className="border-t border-black/10 bg-steel-200 px-4 pb-4 pt-2 md:hidden" aria-label="Mobile">
+            {FEATURES.map((f) => (
+              <NavLink key={f.to} to={f.to} className={({ isActive }) => cx('block px-3 py-2.5 text-lg font-medium text-night-900', isActive && 'bg-white/50')}>
+                {f.label}
+              </NavLink>
+            ))}
+            <Link to="/plan#create" className="btn-primary mt-2 w-full py-3">Plan a drive</Link>
           </nav>
         )}
       </header>
 
-      <main id="main" className={landing ? '' : 'container-wide py-8 sm:py-10'}>
+      <main id="main" className={landing ? '' : 'container-wide pb-10'}>
         <Outlet />
       </main>
 
-      <footer className="mt-16 border-t border-cream-300 bg-cream-50">
-        <div className="container-wide grid gap-6 py-10 text-sm text-ink-500 sm:grid-cols-3">
+      <footer className="mt-20 bg-night-900 text-white/60">
+        <div className="container-wide grid gap-8 py-14 text-sm sm:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2">
-              <Logo size={26} />
-              <span className="font-display text-lg font-semibold text-forest-900">NourishNet</span>
+            <div className="flex items-center gap-2.5 text-white">
+              <LogoMark size={26} />
+              <span className="font-display text-2xl font-medium tracking-[-0.03em]">NourishNet</span>
             </div>
-            <p className="mt-2 max-w-xs">Predict needs. Connect communities. Fight hunger.</p>
+            <p className="mt-3 max-w-xs">Predict needs. Connect communities. Fight hunger.</p>
           </div>
           <div>
-            <div className="font-semibold text-ink-700">How it works</div>
-            <ul className="mt-2 space-y-1">
-              <li><Link className="hover:text-forest-700" to="/plan#ai">How the AI works</Link></li>
-              <li><Link className="hover:text-forest-700" to="/shelters#urgency">The urgency score</Link></li>
-              <li><Link className="hover:text-forest-700" to="/match#how">The matching algorithm</Link></li>
-              <li><Link className="hover:text-forest-700" to="/#sources">Data sources</Link></li>
+            <div className="font-semibold text-white">How it works</div>
+            <ul className="mt-3 space-y-1.5">
+              <li><Link className="hover:text-lime-400" to="/plan#ai">How the AI works</Link></li>
+              <li><Link className="hover:text-lime-400" to="/shelters#urgency">The urgency score</Link></li>
+              <li><Link className="hover:text-lime-400" to="/match#how">The matching algorithm</Link></li>
+              <li><Link className="hover:text-lime-400" to="/#sources">Data sources</Link></li>
             </ul>
           </div>
           <div>
-            <div className="font-semibold text-ink-700">About this prototype</div>
-            <p className="mt-2">Built for the Congressional App Challenge. Map data © OpenStreetMap contributors. Demo organizations and numbers are fictional.</p>
+            <div className="font-semibold text-white">About</div>
+            <p className="mt-3">Built for the Congressional App Challenge. Map data © OpenStreetMap contributors.</p>
             <button
-              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-forest-700 underline underline-offset-2"
+              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-lime-400 underline underline-offset-2"
               onClick={() => {
                 if (confirm('Reset the demo? Drives you created and donations you logged will be removed.')) dispatch({ type: 'reset' });
               }}

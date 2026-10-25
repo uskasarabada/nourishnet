@@ -6,7 +6,8 @@
 @layer base {
   html { -webkit-font-smoothing: antialiased; }
   body { @apply bg-cream-100 text-ink-900 font-sans; }
-  h1, h2, h3 { @apply font-display tracking-tight; }
+  h1, h2 { @apply font-semibold; }
+  h1, h2, h3 { @apply font-display; letter-spacing: -0.03em; }
   :focus-visible { @apply outline-none ring-2 ring-forest-500 ring-offset-2 ring-offset-cream-100; }
   ::selection { background: #A9D3B9; }
 }
@@ -16,29 +17,29 @@
   .container-wide { @apply mx-auto w-full max-w-[1760px] px-4 sm:px-6 lg:px-10 2xl:px-14; }
   .card { @apply bg-white rounded-xl2 border border-cream-300/70 shadow-card; }
   .card-pad { @apply p-5 sm:p-6; }
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed; }
-  .btn-primary { @apply btn bg-forest-700 text-white hover:bg-forest-800 active:scale-[.98] shadow-sm; }
-  .btn-secondary { @apply btn bg-white text-forest-800 border border-forest-200 hover:border-forest-400 hover:bg-forest-50; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-[3px] px-4 py-2 text-sm font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-lime-500 text-night-900 hover:bg-lime-400 active:scale-[.98]; }
+  .btn-secondary { @apply btn bg-white text-night-900 border border-cream-300 hover:border-night-900; }
   .btn-ghost { @apply btn text-ink-700 hover:bg-cream-200; }
   .btn-danger { @apply btn bg-coral-600 text-white hover:bg-coral-700; }
-  .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold border transition-colors; }
-  .chip-on { @apply chip bg-forest-700 border-forest-700 text-white; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold border transition-colors; }
+  .chip-on { @apply chip bg-night-900 border-night-900 text-white; }
   .chip-off { @apply chip bg-white border-cream-300 text-ink-700 hover:border-forest-300; }
   .label { @apply block text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1.5; }
-  .input { @apply w-full rounded-xl border border-cream-300 bg-cream-50 px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:border-forest-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-100; }
+  .input { @apply w-full rounded-md border border-cream-300 bg-cream-50 px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:border-forest-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-100; }
   .eyebrow { @apply text-xs font-bold uppercase tracking-[0.14em] text-forest-600; }
   .muted { @apply text-ink-500; }
   .tabular { font-variant-numeric: tabular-nums; }
 }
 
 /* Range slider */
-input[type='range'].slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: linear-gradient(to right, #176B40 var(--pct, 50%), #E9E1CF var(--pct, 50%)); cursor: pointer; }
-input[type='range'].slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid #176B40; box-shadow: 0 1px 4px rgba(0,0,0,.18); transition: transform .12s; }
+input[type='range'].slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: linear-gradient(to right, #58B83C var(--pct, 50%), #DADDD6 var(--pct, 50%)); cursor: pointer; }
+input[type='range'].slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid #58B83C; box-shadow: 0 1px 4px rgba(0,0,0,.18); transition: transform .12s; }
 input[type='range'].slider::-webkit-slider-thumb:hover { transform: scale(1.12); }
-input[type='range'].slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid #176B40; }
+input[type='range'].slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid #58B83C; }
 
 /* Leaflet polish */
-.leaflet-container { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #F4EFE3; border-radius: inherit; }
+.leaflet-container { font-family: 'Inter', system-ui, sans-serif; background: #F4EFE3; border-radius: inherit; }
 .leaflet-popup-content-wrapper { border-radius: 14px; box-shadow: 0 12px 32px -8px rgba(27,38,32,.25); }
 .leaflet-popup-content { margin: 12px 14px; font-size: 13px; }
 .nn-pin { display: grid; place-items: center; }

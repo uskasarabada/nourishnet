@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { AlertTriangle, BadgeCheck, Beaker, Calculator, ChevronDown, Info, ShieldAlert } from 'lucide-react';
 import type { Provenance } from '../lib/types';
 import type { UrgencyLevel } from '../lib/urgency';
+import { HeroLines } from './HeroLines';
 
 export function cx(...xs: (string | false | null | undefined)[]) {
   return xs.filter(Boolean).join(' ');
@@ -24,22 +25,24 @@ export function Details({ label = 'Show details', hideLabel = 'Hide details', ch
 export const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 export const fmtK = (n: number) => (n >= 10000 ? `${(n / 1000).toFixed(n >= 100000 ? 0 : 1)}k` : fmt(n));
 
-export function PageHeader({ eyebrow, title, subtitle, actions, accent, icon }: { eyebrow?: string; title: string; subtitle?: ReactNode; actions?: ReactNode; accent?: string; icon?: ReactNode }) {
+/** Full-width black page header with accent line art, matching the Home hero. */
+export function PageHeader({ eyebrow, title, subtitle, actions, accent, light, icon }: { eyebrow?: string; title: string; subtitle?: ReactNode; actions?: ReactNode; accent?: string; light?: string; icon?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between animate-rise">
-      <div className="flex max-w-3xl items-start gap-4">
-        {icon && accent && (
-          <div className="mt-1 hidden h-12 w-12 shrink-0 place-items-center rounded-2xl text-white shadow-card sm:grid" style={{ background: accent }} aria-hidden>
-            {icon}
-          </div>
-        )}
-        <div>
-          {eyebrow && <div className="eyebrow mb-2" style={accent ? { color: accent } : undefined}>{eyebrow}</div>}
-          <h1 className="text-3xl font-semibold text-forest-900 sm:text-4xl">{title}</h1>
-          {subtitle && <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{subtitle}</p>}
+    <div className="relative mb-10 mx-[calc(50%-50vw)] overflow-hidden bg-night-900 text-white">
+      <HeroLines color={light ?? accent ?? '#4CAF3F'} />
+      <div className="container-wide relative flex flex-col gap-6 py-14 sm:flex-row sm:items-end sm:justify-between sm:py-20">
+        <div className="max-w-3xl animate-rise">
+          {eyebrow && (
+            <div className="mb-4 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: light ?? '#86DB63' }}>
+              {icon && <span className="grid h-9 w-9 place-items-center rounded-[3px] text-white" style={{ background: accent }} aria-hidden>{icon}</span>}
+              {eyebrow}
+            </div>
+          )}
+          <h1 className="text-4xl font-semibold leading-[1.05] text-white sm:text-6xl">{title}</h1>
+          {subtitle && <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/75">{subtitle}</p>}
         </div>
+        {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
       </div>
-      {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
   );
 }

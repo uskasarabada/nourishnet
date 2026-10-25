@@ -10,6 +10,7 @@ export interface Feature {
   title: string;
   icon: ReactNode;
   color: string; // strong accent (text, active nav, buttons)
+  light: string; // bright version for dark backgrounds
   tint: string; // soft background
   border: string;
   /** One plain sentence for the Home page. */
@@ -26,6 +27,7 @@ export const FEATURES: Feature[] = [
     title: 'Plan a drive',
     icon: <BarChart3 size={20} />,
     color: '#145536',
+    light: '#6CCF4F',
     tint: '#EEF6F1',
     border: '#D5EADD',
     short: 'See how much food your drive will collect before it starts.',
@@ -39,6 +41,7 @@ export const FEATURES: Feature[] = [
     title: 'Track drives',
     icon: <MapPinned size={20} />,
     color: '#1F5FAD',
+    light: '#6AA8F0',
     tint: '#EEF4FC',
     border: '#D3E3F7',
     short: "Log donations and watch your drive's progress.",
@@ -52,6 +55,7 @@ export const FEATURES: Feature[] = [
     title: 'Shelter needs',
     icon: <HeartHandshake size={20} />,
     color: '#B4462A',
+    light: '#F08A6B',
     tint: '#FDF0EC',
     border: '#FAD9CF',
     short: 'See what local shelters need, and who needs it most.',
@@ -65,6 +69,7 @@ export const FEATURES: Feature[] = [
     title: 'Match donations',
     icon: <GitCompareArrows size={20} />,
     color: '#5240B8',
+    light: '#A595F2',
     tint: '#F1EEFB',
     border: '#DCD6F5',
     short: 'Split your food between shelters, fairly and with reasons.',

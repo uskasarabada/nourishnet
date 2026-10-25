@@ -26,6 +26,7 @@ export function Drives() {
       <PageHeader
         eyebrow="Track drives"
         accent={F.color}
+        light={F.light}
         icon={F.icon}
         title="Food drives near you"
         subtitle="Click a drive to see its progress or log donations."

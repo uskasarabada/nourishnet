@@ -8,6 +8,7 @@ import { needLbs } from '../lib/urgency';
 import { matchDonations, supplyFromLots, supplyFromTotals } from '../lib/matching';
 import { Slider, fmt } from '../components/ui';
 import { FEATURES } from '../components/features';
+import { HeroLines } from '../components/HeroLines';
 
 const SOURCES = [
   { name: 'Feeding America', url: 'https://www.feedingamerica.org/', use: '1.2 lb of food ≈ 1 meal', status: 'Used now' },
@@ -48,42 +49,46 @@ export function Landing() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-forest-100/60 blur-3xl" />
-        <div className="container-wide relative grid items-center gap-12 pb-16 pt-12 lg:grid-cols-[1.1fr_1fr] lg:pt-20">
-          <div className="animate-rise">
-            <h1 className="text-[2.6rem] font-semibold leading-[1.05] text-forest-900 sm:text-6xl">
-              Know what your food drive needs <em className="font-display italic text-forest-500">before</em> it starts.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-500">
-              NourishNet predicts how much food your drive will collect, then helps you send it to the local shelters that need it most.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/plan" className="btn-primary px-5 py-3 text-[15px]">Plan a drive <ArrowRight size={16} /></Link>
-              <Link to="/drives" className="btn-secondary px-5 py-3 text-[15px]"><MapPinned size={16} /> See local drives</Link>
-            </div>
+      <section className="relative overflow-hidden bg-night-900 text-white">
+        <HeroLines />
+        <div className="container-wide relative flex min-h-[calc(100vh-5rem)] max-h-[860px] flex-col justify-center py-24">
+          <h1 className="max-w-5xl animate-rise text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-7xl lg:text-[5.5rem]">
+            Predict Every Food Drive. Feed More Families.
+          </h1>
+          <p className="mt-8 max-w-3xl text-xl leading-relaxed text-white/90 sm:text-2xl">
+            Know how much food your drive will collect before it starts, then send every pound to the local shelters that need it most.
+          </p>
+          <div className="mt-12">
+            <Link to="/plan" className="btn-primary px-12 py-5 text-lg font-semibold">
+              Plan Your Food Drive <ArrowRight size={20} />
+            </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="animate-rise [animation-delay:120ms]">
-            <div className="card p-6 shadow-lift sm:p-7">
-              <div className="font-display text-xl font-semibold text-forest-900">Try it: a school food drive</div>
-              <div className="mt-5 space-y-5">
-                <Slider label="People giving" value={participants} min={50} max={1200} step={10} onChange={setParticipants} />
-                <Slider label="Days" value={days} min={1} max={14} onChange={setDays} format={(v) => `${v} day${v > 1 ? 's' : ''}`} />
-              </div>
-              <div className="mt-6 rounded-2xl bg-forest-50 p-5">
-                <div className="text-sm text-ink-500">You'll likely collect about</div>
-                <div className="font-display text-5xl font-semibold text-forest-800 tabular">{fmt(Math.round(fc.median / 10) * 10)} lb</div>
-                <div className="mt-1 text-ink-700">≈ {fmt(fc.median / LBS_PER_MEAL)} meals</div>
-              </div>
-            </div>
+      {/* Try it */}
+      <section className="container-wide grid items-center gap-10 py-20 lg:grid-cols-2">
+        <div>
+          <h2 className="text-4xl font-semibold text-night-900 sm:text-5xl">Try it in five seconds.</h2>
+          <p className="mt-4 max-w-lg text-lg text-ink-500">Move the sliders. Our model, trained on {model.rows.length} past drives, predicts what a school food drive would collect this month.</p>
+          <Link to="/drives" className="btn-secondary mt-8 px-6 py-3 text-base"><MapPinned size={18} /> See local drives</Link>
+        </div>
+        <div className="card p-7">
+          <div className="space-y-6">
+            <Slider label="People giving" value={participants} min={50} max={1200} step={10} onChange={setParticipants} />
+            <Slider label="Days" value={days} min={1} max={14} onChange={setDays} format={(v) => `${v} day${v > 1 ? 's' : ''}`} />
+          </div>
+          <div className="mt-7 rounded-[3px] bg-night-900 p-6 text-white">
+            <div className="text-sm text-white/60">You'll likely collect about</div>
+            <div className="font-display text-6xl font-semibold tracking-[-0.03em] text-lime-400 tabular">{fmt(Math.round(fc.median / 10) * 10)} lb</div>
+            <div className="mt-1 text-white/80">≈ {fmt(fc.median / LBS_PER_MEAL)} meals</div>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="container-wide py-16">
-        <h2 className="text-3xl font-semibold text-forest-900 sm:text-4xl">How it works</h2>
+      <section className="container-wide pb-20">
+        <h2 className="text-4xl font-semibold text-night-900 sm:text-5xl">How it works</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {FEATURES.map((f, i) => (
             <Link key={f.id} to={f.to} className="group rounded-xl2 border bg-white p-6 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift" style={{ borderColor: f.border }}>
@@ -102,15 +107,16 @@ export function Landing() {
       </section>
 
       {/* Success metrics */}
-      <section id="metrics" className="scroll-mt-24 bg-forest-900 text-white">
-        <div className="container-wide py-16">
-          <h2 className="text-3xl font-semibold sm:text-4xl">How we know it's working</h2>
+      <section id="metrics" className="relative scroll-mt-24 overflow-hidden bg-night-900 text-white">
+        <HeroLines />
+        <div className="container-wide relative py-20">
+          <h2 className="text-4xl font-semibold sm:text-5xl">How we know it's working</h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {metrics.map((m) => (
-              <div key={m.label} className="rounded-2xl border border-forest-700 bg-forest-800/60 p-5">
-                <div className="font-display text-5xl font-semibold tabular">{m.value}</div>
+              <div key={m.label} className="rounded-[3px] border border-white/10 bg-white/[0.03] p-6">
+                <div className="font-display text-6xl font-semibold tracking-[-0.03em] text-lime-400 tabular">{m.value}</div>
                 <div className="mt-2 font-bold">{m.label}</div>
-                <div className="text-sm text-forest-200">{m.note}</div>
+                <div className="text-sm text-white/60">{m.note}</div>
               </div>
             ))}
           </div>
@@ -119,7 +125,7 @@ export function Landing() {
 
       {/* Data sources */}
       <section id="sources" className="container-wide scroll-mt-24 py-16">
-        <h2 className="text-2xl font-semibold text-forest-900">Where our data comes from</h2>
+        <h2 className="text-4xl font-semibold text-night-900">Where our data comes from</h2>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           {SOURCES.map((s) => (
             <a key={s.name} href={s.url} target="_blank" rel="noreferrer" className="card p-4 transition-shadow hover:shadow-lift">
