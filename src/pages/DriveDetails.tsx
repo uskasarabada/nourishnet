@@ -37,7 +37,7 @@ export function DriveDetails() {
   const pace = d.status === 'active' && elapsed > 0 ? Math.round((collected / elapsed) * d.durationDays) : null;
 
   const share = async () => {
-    const url = `${window.location.origin}/drives/${d.id}`;
+    const url = `${window.location.origin}${import.meta.env.BASE_URL}drives/${d.id}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
